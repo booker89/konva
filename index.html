@@ -1,32 +1,140 @@
 <script src="https://unpkg.com/konva@3.1.0/konva.js"></script>
-<div id="container"></div>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>musical instrument shop</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+	<div id="container"></div>
+	<p class="center">
+    <input type="text" id="textinput"> 
+			<button onclick="update()">Update</button>
+	</p>
+	<div id="img_container">
+		<img id="imgId" onclick="updateImg()" src="https://i.dlpng.com/static/png/6657897_preview.png" alt="">
+		<!-- <img onclick="updateImg()" src="https://cdn.shopify.com/s/files/1/1061/1924/products/Blow_Kiss_Emoji_large.png?v=1571606037" alt=""> -->
+	</div>
+</body>
 <script>
+	// Stage->Layer->groups->shapes
 	// first we need to create a stage
 	var stage = new Konva.Stage({
 		container: 'container',   // id of container <div>
 		width: 500,
-		height: 500
+		height: 300
 	});
 
 	// then create layer
 	var layer = new Konva.Layer();
 
-	// create our shape
-	var circle = new Konva.Circle({
-		x: stage.width() / 2,
-		y: stage.height() / 2,
-		radius: 70,
-		fill: 'red',
-		stroke: 'black',
-		strokeWidth: 4
-	});
+	var text = new Konva.Text({
+		x: 10,
+		y: 15,
+		text: 'simple text',
+		fontSize: 20, // 默認值爲12
+		fontFamily: 'monospace', // 默認是Arial
+		fill: 'green',
+		draggable: true,
+		id: 'simpleText'
 
-	// add the shape to the layer
-	layer.add(circle);
+});
+  // 添加到層
+  layer.add(text);
+
+
+var imgs ="https://i.dlpng.com/static/png/6657897_preview.png";
+var imageObj010 = new Image();
+imageObj010.src = imgs; // 圖片的路徑
+ 	var image = new Konva.Image({
+ 			x: 250,
+ 			y: 100,
+ 			image: imageObj010,
+ 			width: 50, 
+			height: 50,
+			id: 'cuteImage'
+
+ 	});
+layer.add(image);
+
 
 	// add the layer to the stage
 	stage.add(layer);
 
 	// draw the image
 	layer.draw();
+
+	layer.on('mouseover',function(e){
+		var box=e.target;
+		box.fill('red');
+		box.draw();
+	})
+	layer.on('mouseout',function(e){
+		var box=e.target;
+		box.fill('green');
+		box.draw();
+
+	});
+	var outImg=document.querySelector('#imgId');
+	console.log(outImg);
+	outImg.addEventListener("click", myFunction);
+	function myFunction() {
+		console.log("Hello World!");
+		var drawImage=stage.findOne('#cuteImage');
+		drawImage.fillPatternImage(outImg.src);
+		layer.draw();
+	}
+	myFunction()
+		
+// ------------
+	// function updateImg(){
+	// 	var drawImage=stage.findOne('#cuteImage');
+	// 	var outImg=document.getElementsByTagName('img');
+	// 	console.log(outImg)
+	// 	drawImage.fillPatternImage(outImg.src);
+	// 	layer.draw();
+	// }
+// --------------
+	function update(){
+		var shape=stage.findOne('#simpleText');
+		var input=document.getElementById('textinput');
+		shape.setText(input.value);
+		layer.draw();
+	}
 </script>
+
+
+
+
+<!-- var stage = new Konva.Stage({
+	container: 'container',
+	width: window.innerWidth,
+	height: window.innerHeight
+});
+
+// add canvas element
+var layer = new Konva.Layer();
+stage.add(layer);
+
+// create shape
+var box = new Konva.Rect({
+	x: 50,
+	y: 50,
+	width: 100,
+	height: 50,
+	fill: '#00D2FF',
+	stroke: 'black',
+	strokeWidth: 4,
+	draggable: true
+});
+layer.add(box);
+
+layer.draw();
+
+// add cursor styling
+box.on('mouseover', function() {
+	document.body.style.cursor = 'pointer';
+});
+box.on('mouseout', function() {
+	document.body.style.cursor = 'default';
+}); -->

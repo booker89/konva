@@ -1,0 +1,12 @@
+#container{
+	width: 500px;
+	margin: 0 auto;
+	border: 1px solid red;
+}
+.center{
+	text-align: center;
+}
+img{
+	width: 100px;
+	/* border: 1px solid black; */
+}
